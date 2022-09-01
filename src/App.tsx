@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	// TODO: 看是否可以優化成一個實例，切換聲音，不要一直new SpeechSynthesisUtterance跟getVoices
+
+	const speak = () => {
+		const voices = window.speechSynthesis.getVoices();
+		// console.log('voices', window.speechSynthesis.getVoices());
+
+		const synth = window.speechSynthesis;
+		const utterThis = new SpeechSynthesisUtterance('In the near future, cash could become obsolete, and your phone could completely replace your wallet.');
+		utterThis.pitch = 1;
+		utterThis.voice = voices[4];
+		utterThis.rate = 0.8;
+		synth.speak(utterThis);
+	}
+
+	return (
+		<div className="App">
+			<button onClick={() => { speak() }}>speak</button>
+		</div>
+	);
 }
 
 export default App;
